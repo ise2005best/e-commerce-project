@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
 .nav-bar {
     height: 70px;
     width: 100%;
@@ -9,6 +10,9 @@
       height: 100%;
       width: 70px;
       padding: 25px;
+      font-family: 'Balsamiq Sans', cursive;
+      text-decoration: none;
+      font-size: x-large;
     }
   
     .nav-bar-container {

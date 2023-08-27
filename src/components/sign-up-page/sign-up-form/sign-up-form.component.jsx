@@ -1,13 +1,13 @@
-import React, { useState,  } from "react";
+import React, { useState} from "react";
+import {useNavigate } from "react-router-dom";
 import PasswordChecklist from "react-password-checklist";
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import './sign-up-component.scss';
-import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth, } from "../../../utils/firebase/firebase.utils";
-import { redirect } from "react-router-dom";
+import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../../utils/firebase/firebase-for-signUp/firebase-sign-up.utils";
 import LogIn from "../../login-form/login-form.component";
-
+import picture from '../../../static/assortment-pieces-cake.jpg'
 const initialFields = {
     displayName: '',
     email: '',
@@ -19,31 +19,31 @@ const SignUpForm = () => {
     const [fields, setFields] = useState(initialFields);
     const [showPassword, setShowPassword] = useState(false);
     const [passwordValid, setPasswordValid] = useState(false);
+    const [errorMessages, setErrorMessages] = useState('');
     const { displayName, email, password, confirmPassword } = fields;
-   
+   const navigate = useNavigate();
 
     const resetForm = () => {
         setFields(initialFields);
     }
-
+ 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!passwordValid) {
-            return window.alert("Password does not meet the requirements");
+            setErrorMessages("Password does not meet the requirements");
         }
 
         try {
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
             await createUserDocumentFromAuth(user, { displayName });
             resetForm();
-            redirect("/thankYouForSigningUpWithUs");
+            navigate("/thankYouForSigningUpWithUs", {state : {user}});
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
-                console.error("Error creating user", error);
-                window.alert('Cannot create user, email already in use');
+                setErrorMessages('Cannot create user, email already in use');
             } else {
                 console.error("Error getting this user", error);
-                window.alert("An unexpected error occurred");
+                setErrorMessages("An unexpected error occurred");
             }
         }
     }
@@ -56,13 +56,17 @@ const SignUpForm = () => {
     const togglePassword = () => {
         setShowPassword(!showPassword);
     }
-
+   
     return (
-        <div>
-            <h2>New Account?</h2>
-            <span> Sign Up with your email and password </span>
+        <div className="sign-up-page">
+            <div className="picture-container">
+            <img alt="side-by-side-img-cake" className="cake-picture" src={picture}/>
+            </div>
+            <div className="signup-container">
+            <h2 className="header">CREATE NEW ACCOUNT</h2>
             <form onSubmit={handleSubmit}>
-                <LogIn type="text"
+            <div className="text-fields">
+            <LogIn type="text"
                     required
                     placeholder="Name"
                     className="sign-in-text"
@@ -76,7 +80,8 @@ const SignUpForm = () => {
                     onChange={handleChange}
                     name="email"
                     value={email} />
-                <LogIn type={showPassword ? 'text' : 'password'}
+                    <div className="password-container">
+                    <LogIn type={showPassword ? 'text' : 'password'}
                     required
                     className='sign-in-text'
                     placeholder="Password"
@@ -84,8 +89,11 @@ const SignUpForm = () => {
                     name="password"
                     value={password} />
                 <Icon
+                    className="eye-icon"
                     icon={showPassword ? eyeOff : eye}
                     onClick={togglePassword} />
+                    </div>
+                
                 <LogIn type='password'
                     required
                     placeholder="Confirm Password"
@@ -93,8 +101,9 @@ const SignUpForm = () => {
                     className='sign-in-text'
                     name="confirmPassword"
                     value={confirmPassword} />
-
-                <PasswordChecklist
+            </div>
+            <div className="password-check-list-container">
+            <PasswordChecklist
                     className="password-check-list"
                     rules={['minLength', 'specialChar', 'capital', 'number', 'match']}
                     minLength={8}
@@ -109,9 +118,13 @@ const SignUpForm = () => {
                     }}
                     onChange={(isValid) => { setPasswordValid(isValid) }}
                 />
-                <button type="submit">Submit</button>
+            </div>
+               
+                <p className="error-message">{errorMessages}</p>
+                <button type="submit" className="submit-button">Submit</button>
               
             </form>
+            </div>
         </div>
     )
 }
