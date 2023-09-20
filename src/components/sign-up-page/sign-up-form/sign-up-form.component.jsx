@@ -102,6 +102,7 @@ const SignUpForm = () => {
                     name="confirmPassword"
                     value={confirmPassword} />
             </div>
+            <p className="error-message">{errorMessages}</p>
             <div className="password-check-list-container">
             <PasswordChecklist
                     className="password-check-list"
@@ -120,7 +121,7 @@ const SignUpForm = () => {
                 />
             </div>
                
-                <p className="error-message">{errorMessages}</p>
+               
                 <button type="submit" className="submit-button">Submit</button>
               
             </form>

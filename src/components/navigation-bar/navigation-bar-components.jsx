@@ -1,6 +1,5 @@
 import { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
-import {ReactComponent as Logo1} from '../../static/crown.svg';
 import { userContext } from "../../context/user.context";
 import { signUserOut } from "../../utils/firebase/firebase-for-signIn/firebase-sign-in.utils";
 import './navigation.styles.scss';

@@ -3,16 +3,10 @@ import NavBar from './components/navigation-bar/navigation-bar-components';
 import RedirectSignUp from './components/sign-up-page/redirect-signup/signup-redirect.component';
 import SignUpForm from './components/sign-up-page/sign-up-form/sign-up-form.component';
 import SignInPage from './components/sign-in-page/sign-in';
+import Shop from './components/shop/shop.components';
 import { Route, Routes} from 'react-router-dom';
 import './app.styles.scss';
 
-const Shop = () =>{
-  return(
-    <div>
-      HELLO WORLD
-    </div>
-  )
-}
 const App = () => {
   return (
    <div>
