@@ -3,8 +3,6 @@ import NavBar from './components/navigation-bar/navigation-bar-components';
 import RedirectSignUp from './components/sign-up-page/redirect-signup/signup-redirect.component';
 import SignUpForm from './components/sign-up-page/sign-up-form/sign-up-form.component';
 import SignInPage from './components/sign-in-page/sign-in';
-import ForgetPassword from './components/reset-password/forgot-password/forgot-password.compnent';
-import UpdatePassword from './components/reset-password/update-password/update-password.component';
 import Shop from './components/shop/shop.components';
 import ForgetPassword from './components/reset-password/forgot-password/forgot-password.compnent';
 import UpdatePassword from './components/reset-password/update-password/update-password.component';
