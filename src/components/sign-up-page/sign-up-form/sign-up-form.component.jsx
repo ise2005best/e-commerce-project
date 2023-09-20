@@ -7,7 +7,7 @@ import { eye } from 'react-icons-kit/feather/eye'
 import './sign-up-component.scss';
 import { createAuthUserWithEmailAndPassword, createUserDocumentFromAuth } from "../../../utils/firebase/firebase-for-signUp/firebase-sign-up.utils";
 import LogIn from "../../login-form/login-form.component";
-import picture from '../../../static/assortment-pieces-cake.jpg'
+
 const initialFields = {
     displayName: '',
     email: '',
@@ -37,7 +37,7 @@ const SignUpForm = () => {
             const { user } = await createAuthUserWithEmailAndPassword(email, password);
             await createUserDocumentFromAuth(user, { displayName });
             resetForm();
-            navigate("/thankYouForSigningUpWithUs", {state : {user}});
+            navigate("/thank-you-for-signing-up-with-us", {state : {user}});
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
                 setErrorMessages('Cannot create user, email already in use');
@@ -58,12 +58,10 @@ const SignUpForm = () => {
     }
    
     return (
-        <div className="sign-up-page">
-            <div className="picture-container">
-            <img alt="side-by-side-img-cake" className="cake-picture" src={picture}/>
-            </div>
+        <div style={{backgroundColor:"#1D2743", padding:"100px"}}>
+            
             <div className="signup-container">
-            <h2 className="header">CREATE NEW ACCOUNT</h2>
+            <h2 className="header">SIGN UP NOW!</h2>
             <form onSubmit={handleSubmit}>
             <div className="text-fields">
             <LogIn type="text"
@@ -121,8 +119,10 @@ const SignUpForm = () => {
                 />
             </div>
                
-               
-                <button type="submit" className="submit-button">Submit</button>
+                <p className="error-message">{errorMessages}</p>
+                <button type="submit" className="submit-button" >
+                    SUBMIT
+                    </button>
               
             </form>
             </div>
