@@ -1,21 +1,22 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 import LogIn from "../../login-form/login-form.component";
-import { signInAuthUserWithEmailAndPassword, passwordResetEmailToUser } from "../../../utils/firebase/firebase-for-signIn/firebase-sign-in.utils";
+import { signInAuthUserWithEmailAndPassword } from "../../../utils/firebase/firebase-for-signIn/firebase-sign-in.utils";
 import './sign-in-form-component.styles.scss';
-const initialFields = {
-    email: '',
-    password: '',
-}
+
 
 const SignInForm = () => {
-const [fields, setFields] = useState(initialFields);
-const [showPassword, setShowPassword] = useState(false);
-const [errorMessages, setErrorMessages] = useState('')
-const { email, password } = fields;
+    const initialFields = {
+        email: '',
+        password: '',
+    }
+    const [fields, setFields] = useState(initialFields);
+    const [showPassword, setShowPassword] = useState(false);
+    const [errorMessages, setErrorMessages] = useState('')
+    const { email, password } = fields;
     const resetForm = () => {
         setFields(initialFields);
     }
@@ -23,20 +24,8 @@ const { email, password } = fields;
         const { name, value } = event.target;
         setFields({ ...fields, [name]: value });
     }
-    
-    const handleForgotPassword = async (email) =>{
-        try {
-           await passwordResetEmailToUser(email)
-        } catch (error) {
-            switch(error.code){
-                case 'auth/missing-email':
-                setErrorMessages('Please input your email')
-                break;
-                default:
-                    setErrorMessages(error)
-            }
-        }
-    }
+
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -45,10 +34,10 @@ const { email, password } = fields;
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
-                setErrorMessages("Incorrect password")
+                    setErrorMessages("Incorrect password")
                     break;
                 case 'auth/user-not-found':
-                setErrorMessages('no user found')
+                    setErrorMessages('no user found')
                     break;
                 default:
                     setErrorMessages(error)
@@ -56,54 +45,54 @@ const { email, password } = fields;
         }
     }
 
-   
+
     const togglePassword = () => {
         setShowPassword(!showPassword);
     }
 
     return (
         <div>
-            <h1 className="login"> LOGIN </h1>
+            <h1 className="login"> SIGN IN </h1>
             <form onSubmit={handleSubmit}>
                 <LogIn type="email"
                     required
-                    placeholder="Email" 
+                    placeholder="Email"
                     className='sign-in-text'
                     onChange={handleChange}
                     name="email"
                     value={email} />
-                    <div className="password-container">
+                <div className="password-container">
                     <LogIn type={showPassword ? 'text' : 'password'}
-                    required
-                    className='sign-in-text'
-                    placeholder="Password"
-                    onChange={handleChange}
-                    name="password"
-                    value={password}
-                    
+                        required
+                        className='sign-in-text'
+                        placeholder="Password"
+                        onChange={handleChange}
+                        name="password"
+                        value={password}
+
                     />
-                <Icon
-                    icon={showPassword ? eyeOff : eye}
-                    onClick={togglePassword} 
-                    className="eye-icon"
+                    <Icon
+                        icon={showPassword ? eyeOff : eye}
+                        onClick={togglePassword}
+                        className="eye-icon"
                     />
-                    </div>
+                </div>
                 <p className="error-messages">{errorMessages}</p>
-                <Link className="forget-password-button" onClick={()=> handleForgotPassword()}>
+                <Link className="forget-password-button" to={'/update-password'}>
                     Forgot Password?
                 </Link>
-                <br/>
+                <br />
                 <div className="button-container">
-                <button type="submit"
-                className="login-button"
-                > Sign In </button>
+                    <button type="submit"
+                        className="login-button"
+                    > Sign In </button>
                 </div>
-            
-               <Link className="sign-up-link" to={'/sign-up'} >
+
+                <Link className="sign-up-link" to={'/sign-up'} >
                     Dont have an account? Please sign up
                 </Link>
-              
-                {/* <ForgetPasswordPage email={email}/> */}
+
+
             </form>
         </div>
     )

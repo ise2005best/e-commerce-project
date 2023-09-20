@@ -1,41 +1,55 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import {ReactComponent as Logo1} from '../../static/crown.svg';
 import { userContext } from "../../context/user.context";
 import { signUserOut } from "../../utils/firebase/firebase-for-signIn/firebase-sign-in.utils";
 import './navigation.styles.scss';
 const NavBar = () => {
-    const {currentUser} = useContext(userContext);
-    const handleSignOutUser = async () =>{
+    const { currentUser } = useContext(userContext);
+    const handleSignOutUser = async () => {
         await signUserOut();
     }
+
+    function scrollByAmount(amount) {
+        window.scrollBy({
+            top: amount,
+            behavior: 'smooth',
+        });
+    }
+
     return (
         <Fragment>
             <div className="nav-bar">
-            
-                    <Link className="logo-link" to={'/'}>
-                       ISESEN
-                    </Link>
-             
+
+                <Link className="logo-link" to={'/'}>
+                    ISESEN
+                </Link>
+
                 <div className="nav-bar-container">
-                    <Link className="nav-link" to={'/shop'}>
-                        SHOP
+                    <Link className="nav-link" to={'/'}>
+                        HOME
                     </Link>
+
+                    <Link to="#" onClick={() => scrollByAmount(700)} className="nav-link" >
+                        CAKES
+                    </Link>
+                    
                     {
                         currentUser ? (
                             <span className="nav-link" onClick={handleSignOutUser}> {''}
-                                Sign Out {''}
+                                SIGN OUT {''}
                             </span>
-                        ):(
-                        <Link className="nav-link" to={'/sign-in'}>
-                        SIGN IN
-                    </Link>
-                    )
+                        ) : (
+                            <Link className="nav-link" to={'/sign-in'} style={{ marginRight: '40px' }}>
+                                SIGN IN
+                            </Link>
+                        )
                     }
-                   
+
                 </div>
 
             </div>
+        
+
         </Fragment>
 
     )

@@ -28,7 +28,7 @@ const RedirectSignUp = () =>{
                     className="email-image"/>
                 </div>
             <h1 className="major-text">
-                Thank You for signing up with IseSen 
+                Thank You for signing up with ISESEN 
             </h1>
             <span className="email-verification-text">
                 Please verify your email address to get notification to our latest products and get exclusive discounts
