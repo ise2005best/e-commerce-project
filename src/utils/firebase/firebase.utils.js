@@ -1,5 +1,4 @@
 import { initializeApp } from 'firebase/app';
-
 export const firebaseConfig = {
     apiKey: "AIzaSyArMWTNbPKpwqr_zmUv5R14kUrOIzc3m68",
     authDomain: "udemy-react-project-69f47.firebaseapp.com",

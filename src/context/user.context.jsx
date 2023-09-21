@@ -22,7 +22,7 @@ export const UserProvider = ({children})=>{
       })
         return unsubscribe;
     }, [])
-    return <userContext.Provider value={value}>
+    return <userContext.Provider value={{value}}>
         {children}
     </userContext.Provider>
 }

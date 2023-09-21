@@ -1,20 +1,18 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useContext} from "react";
 import { Link } from "react-router-dom";
 import { userContext } from "../../context/user.context";
+import { CartContext } from "../../context/cart.context";
 import { signUserOut } from "../../utils/firebase/firebase-for-signIn/firebase-sign-in.utils";
+import CartIcon from "../cart/cart.components";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import './navigation.styles.scss';
 const NavBar = () => {
     const { currentUser } = useContext(userContext);
+    const {isCartOpen} = useContext(CartContext)
     const handleSignOutUser = async () => {
         await signUserOut();
     }
 
-    function scrollByAmount(amount) {
-        window.scrollBy({
-            top: amount,
-            behavior: 'smooth',
-        });
-    }
 
     return (
         <Fragment>
@@ -29,7 +27,7 @@ const NavBar = () => {
                         HOME
                     </Link>
 
-                    <Link to="/shop" onClick={() => scrollByAmount(700)} className="nav-link" >
+                    <Link to="/shop" className="nav-link" >
                         Shop
                     </Link>
                     
@@ -44,9 +42,9 @@ const NavBar = () => {
                             </Link>
                         )
                     }
-
+                    <CartIcon/>
                 </div>
-
+                {isCartOpen && <CartDropdown/>}
             </div>
         
 
