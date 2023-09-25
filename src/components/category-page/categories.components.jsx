@@ -2,16 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useState ,useRef} from "react";
+import { useState ,useRef, useContext} from "react";
+import { CartContext } from "../../context/cart.context";
 import Footer from "../Footer-page/footer";
 import slider from '../../slider-data.json'
-import product from '../../product-data.json'
+import product from '../../product-data.json';
 const MainPage = () => {
-
   const cakeRef = useRef(null);
 
   const [visibleCategories, setVisibleCategories] = useState(6);
-
   const handleShowMore = () => {
     setVisibleCategories((prevVisible) => prevVisible + 3);
   };
@@ -30,7 +29,21 @@ const MainPage = () => {
     autoplay: true, // Auto-animate the slider
     autoplaySpeed: 2000, // Set the time between slides (in milliseconds)
   };
-
+  const {addItemsToCart} = useContext(CartContext)
+  const addProductsToCart = (event) =>{
+    const inputedId = (event.target.id);
+    const productId = inputedId - 1;
+   // check if the id of the button is equals to the id of the product
+    if(inputedId == product[productId].id){
+    //create an array or an object to pass to addItemsToCart
+    const products = []
+    products.id = product[productId].id
+    products.title =product[productId].title
+    products.price = product[productId].price
+    products.imageUrl = product[productId].imageUrl
+    addItemsToCart(products) 
+    }
+  }
   return (
     <div>
       <div>
@@ -59,6 +72,10 @@ const MainPage = () => {
                   <h2>{title}</h2>
                   <p>Shop Now</p>
                   <p> {price}</p>
+                
+                  <button onClick={addProductsToCart} id={id}>
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
@@ -67,6 +84,7 @@ const MainPage = () => {
           <button className="show-more-button" onClick={handleShowMore}>
             Show More
           </button>
+          
         )}
       </div>
       <Footer />
