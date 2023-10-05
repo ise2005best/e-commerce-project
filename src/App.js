@@ -4,6 +4,7 @@ import RedirectSignUp from './components/sign-up-page/redirect-signup/signup-red
 import SignUpForm from './components/sign-up-page/sign-up-form/sign-up-form.component';
 import SignInPage from './components/sign-in-page/sign-in';
 import Shop from './components/shop/shop.components';
+import CheckoutPage from './components/checkout/checkout.component';
 import { Route, Routes} from 'react-router-dom';
 import './app.styles.scss';
 
@@ -16,6 +17,7 @@ const App = () => {
       <Route path='shop' element={<Shop/>} />
       <Route path='sign-in' element ={<SignInPage/>} />
       <Route path='sign-up' element = {<SignUpForm/>} />
+      <Route path='product/checkout' element ={<CheckoutPage/>} />
      <Route path='thank-you-for-signing-up-with-us' element = {<RedirectSignUp/>} />
     </Routes>
     
