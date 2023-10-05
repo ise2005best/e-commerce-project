@@ -12,4 +12,4 @@ export const ProductsProvider = ({children}) =>{
             {children}
         </ProductContext.Provider>
     )
-}
+} 
